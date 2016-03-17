@@ -22,7 +22,7 @@ object blocklexicalscope {
 
   // Since x is actually visible inside all these nested functions,
   // avoid the redundancy of passing it as a parameter.
-  // Much cleaner
+  // Much cleaner, same results.
   def sqrtClean(x: Double) = {
     def sqrtIter(guess: Double): Double =
       if (isGoodEnough(guess)) guess
@@ -41,4 +41,6 @@ object blocklexicalscope {
   sqrt(1e-6)                                      //> res6: Double = 0.0010000001533016628
   sqrt(1e60)                                      //> res7: Double = 1.0000788456669446E30
 
+
+14%21                                             //> res8: Int(14) = 14
 }
