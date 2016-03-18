@@ -2,6 +2,9 @@ package week2
 
 // A curried function is a function that returns (nested) functions.
 // All functions have 1 arg.
+// wiki:
+// technique of translating the evaluation of a function that takes multiple arguments (or a tuple of arguments)
+// into evaluating a sequence of functions, each with a single argument.
 object curry {
 
   // calculate the product of the values of a function for a given interval
