@@ -2,8 +2,7 @@ package week2
 
 // a more advanced approach.
 
-// add neg class
-// add subtract class
+
 // find x - y - z
 object rationalsAdv {
   val x = new RationalAdv(1, 3)                   //> x  : week2.RationalAdv = 1/3
@@ -15,6 +14,8 @@ object rationalsAdv {
   x.sub(y).sub(z)                                 //> res3: week2.RationalAdv = 28/42
 }
 
+// add neg class
+// add subtract class
 class RationalAdv(x: Int, y: Int) {
   def numer = x
   def denom = y
