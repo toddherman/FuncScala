@@ -17,6 +17,7 @@ object rationals {
 }
 
 // using infix notation and relaxed identifiers to allow rational numbers to be used like Int or Double
+// re: relaxed identifiers:  of significance are symbolic, operator symbols.  See notes on implied precedence.
 class Rational(x: Int, y: Int) {
   require(y != 0, "denominator must be non-zero")
 
