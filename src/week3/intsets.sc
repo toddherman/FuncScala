@@ -1,19 +1,24 @@
 package week3
 
 object intsets {
-  val t1 = new NonEmpty(3, new Empty, new Empty)  //> t1  : week3.NonEmpty = {.3.}
+  val t1 = new NonEmpty(3, Empty, Empty)          //> t1  : week3.NonEmpty = {.3.}
   val t2 = t1 incl 4                              //> t2  : week3.IntSet = {.3{.4.}}
 }
 
+// added a method for forming the union of two sets
 abstract class IntSet {
   def incl(x: Int): IntSet
   def contains(x: Int): Boolean
+  def union(other: IntSet): IntSet //signature of union
 }
 
-class Empty extends IntSet {
+// updated as a singleton object named Empty instead of a class
+object Empty extends IntSet {
   def contains(x: Int): Boolean = false
-  def incl(x: Int): IntSet = new NonEmpty(x, new Empty, new Empty)
+  def incl(x: Int): IntSet = new NonEmpty(x, Empty, Empty)
   override def toString = "."
+  // the union of an empty set and another set...
+  def union(other: IntSet): IntSet = other
 }
 
 class NonEmpty(elem: Int, left: IntSet, right: IntSet) extends IntSet {
@@ -25,5 +30,15 @@ class NonEmpty(elem: Int, left: IntSet, right: IntSet) extends IntSet {
     if (x < elem) new NonEmpty(elem, left incl x, right)
     else if (x > elem) new NonEmpty(elem, left, right incl x)
     else this
-    override def toString = "{" + left + elem + right +"}"
+  override def toString = "{" + left + elem + right + "}"
+  
+  // lots of iteration, how do we know the recursion will terminate?
+  // every call on union is on a set that is smaller than what we started with
+  // therefor at some point we have to reach zero.
+  // Then we fall back to the Class Empty where "other " is returned
+  // see Dynamic Method Dispatch:  code that is invoked by a method depends on the
+  // runtime type of the object that contains the method.
+  def union(other: IntSet): IntSet =
+  	((left union right) union other) incl elem
+
 }
