@@ -25,5 +25,5 @@ object scratch {
   if (true) 1 else false                          //> res1: AnyVal = 1
   // Why does this return "AnyVal"?
   // returns Int or Boolean, but those two types don't match
-  // See Class Hierarchy graphic.
+  // See Class Hierarchy graphic.  Int and Bool are below AnyVal.
 }
