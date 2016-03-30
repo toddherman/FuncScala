@@ -5,6 +5,7 @@ trait List[+T] {
   def isEmpty: Boolean
   def head: T
   def tail: List[T]
+  def prepend[U >: T](elem: U): List[U] = new Cons(elem, this)
 }
 
 class Cons[T](val head: T, val tail: List[T]) extends List[T] {
@@ -20,4 +21,7 @@ object Nil extends List[Nothing] {
 }
 object test {
   val x: List[String] = Nil // should be the empty list.
+
+  // attempt at proving appropriate type inference
+  def f(xs: List[NonEmpty], x: Empty) = xs prepend x
 }
