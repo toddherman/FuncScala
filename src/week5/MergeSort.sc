@@ -6,6 +6,11 @@ object MergeSort {
   // make the function sort polymorphic
   // pass the comparison operation as an additional parameter
   
+  // if you have several parameter lists and one of them is a function value, to put the function value last.
+  // Cuz then you have a better chance that the type's already inferred by the time the compiler
+  // type checks the function value and
+  // that means you don't have to write them explicitly
+  
   def msort[T](xs: List[T])(lt: (T, T) => Boolean): List[T] = {
     // split the list
     val n = xs.length / 2
@@ -22,27 +27,25 @@ object MergeSort {
           // compare x/y.  if less than, then x is the first element
           if (lt(x, y)) x :: merge(xs1, ys)
           else y :: merge(xs, ys1)
-
       }
-
       // return first and second halves of the list
       val (fst, snd) = xs splitAt n
-
       // recursive call to sort, then merge
       merge(msort(fst)(lt), msort(snd)(lt))
     }
   }                                               //> msort: [T](xs: List[T])(lt: (T, T) => Boolean)List[T]
 
-  // showing that it works
   val nums = List(2, -4, 5, 7, 1, 99)             //> nums  : List[Int] = List(2, -4, 5, 7, 1, 99)
-  msort(nums)((x: Int, y: Int) => x < y)          //> res0: List[Int] = List(-4, 1, 2, 5, 7, 99)
+  // the types of the two function values are not necessary, removed.
+  // scala figures out type by analyzing the call of msort of nums, because nums is a list of int
+  msort(nums)((x, y) => x < y)                    //> res0: List[Int] = List(-4, 1, 2, 5, 7, 99)
   
 // ussing a list of strings
   val fruits = List("apple", "pineapple", "orange", "banana", "kiwi")
                                                   //> fruits  : List[String] = List(apple, pineapple, orange, banana, kiwi)
   // pass java.string comparison operator.  Does it return -1?
-  msort(fruits)((x: String, y: String)=> x.compareTo(y) < 0)
-                                                  //> res1: List[String] = List(apple, banana, kiwi, orange, pineapple)
+  // scala figures out type by analyzing the call of msort of fruits, because fruits is a list of Strings
+  msort(fruits)((x, y)=> x.compareTo(y) < 0)      //> res1: List[String] = List(apple, banana, kiwi, orange, pineapple)
   
   // compareTo is a method on Java.string
 
