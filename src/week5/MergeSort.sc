@@ -1,21 +1,26 @@
 package week5
 
 object MergeSort {
-  def msort(xs: List[Int]): List[Int] = {
+  
+  // attempt to parameterize
+  // make the function sort polymorphic
+  // pass the comparison operation as an additional parameter
+  
+  def msort[T](xs: List[T])(lt: (T, T) => Boolean): List[T] = {
     // split the list
     val n = xs.length / 2
     // if zero or 1 (division truncates), sorted already, just return the list
     if (n == 0) xs
     else {
       // form a pair, then match on the pair
-      def merge(xs: List[Int], ys: List[Int]): List[Int] = (xs, ys) match {
+      def merge(xs: List[T], ys: List[T]): List[T] = (xs, ys) match {
         // if the first is Nil, return the second
         case (Nil, ys) => ys
         case (xs, Nil) => xs
         // if both are NON Nil
         case (x :: xs1, y :: ys1) =>
           // compare x/y.  if less than, then x is the first element
-          if (x < y) x :: merge(xs1, ys)
+          if (lt(x, y)) x :: merge(xs1, ys)
           else y :: merge(xs, ys1)
 
       }
@@ -24,13 +29,22 @@ object MergeSort {
       val (fst, snd) = xs splitAt n
 
       // recursive call to sort, then merge
-      merge(msort(fst), msort(snd))
+      merge(msort(fst)(lt), msort(snd)(lt))
     }
-  }                                               //> msort: (xs: List[Int])List[Int]
+  }                                               //> msort: [T](xs: List[T])(lt: (T, T) => Boolean)List[T]
 
   // showing that it works
   val nums = List(2, -4, 5, 7, 1, 99)             //> nums  : List[Int] = List(2, -4, 5, 7, 1, 99)
-  msort(nums)                                     //> res0: List[Int] = List(-4, 1, 2, 5, 7, 99)
+  msort(nums)((x: Int, y: Int) => x < y)          //> res0: List[Int] = List(-4, 1, 2, 5, 7, 99)
+  
+// ussing a list of strings
+  val fruits = List("apple", "pineapple", "orange", "banana", "kiwi")
+                                                  //> fruits  : List[String] = List(apple, pineapple, orange, banana, kiwi)
+  // pass java.string comparison operator.  Does it return -1?
+  msort(fruits)((x: String, y: String)=> x.compareTo(y) < 0)
+                                                  //> res1: List[String] = List(apple, banana, kiwi, orange, pineapple)
+  
+  // compareTo is a method on Java.string
 
   val pair = ("answer", 42)                       //> pair  : (String, Int) = (answer,42)
 
