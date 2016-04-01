@@ -11,9 +11,10 @@ object MergeSort {
   // Cuz then you have a better chance that the type's already inferred by the time the compiler
   // type checks the function value and
   // that means you don't have to write them explicitly
-  // Using the "Ordering" class instead.
+  // Using the "Ordering" class instead,
+  // Made it implicit.  So code is concise, but still fully parametric.
   
-  def msort[T](xs: List[T])(ord: Ordering[T]): List[T] = {
+  def msort[T](xs: List[T])(implicit ord: Ordering[T]): List[T] = {
     // split the list
     val n = xs.length / 2
     // if zero or 1 (division truncates), sorted already, just return the list
@@ -33,15 +34,15 @@ object MergeSort {
       // return first and second halves of the list
       val (fst, snd) = xs splitAt n
       // recursive call to sort, then merge
-      merge(msort(fst)(ord), msort(snd)(ord))
+      merge(msort(fst), msort(snd))
     }
-  }                                               //> msort: [T](xs: List[T])(ord: scala.math.Ordering[T])List[T]
+  }                                               //> msort: [T](xs: List[T])(implicit ord: scala.math.Ordering[T])List[T]
 
   val nums = List(2, -4, 5, 7, 1, 99)             //> nums  : List[Int] = List(2, -4, 5, 7, 1, 99)
   // the types of the two function values are not necessary, removed.
   // scala figures out type by analyzing the call of msort of nums, because nums is a list of int
   // big reduction using Ordering
-  msort(nums)(Ordering.Int)                       //> res0: List[Int] = List(-4, 1, 2, 5, 7, 99)
+  msort(nums)                                     //> res0: List[Int] = List(-4, 1, 2, 5, 7, 99)
   
 // ussing a list of strings
   val fruits = List("apple", "pineapple", "orange", "banana", "kiwi")
@@ -49,15 +50,7 @@ object MergeSort {
   // pass java.string comparison operator.  Does it return -1?
   // scala figures out type by analyzing the call of msort of fruits, because fruits is a list of Strings
   // another big reduction using Ordering
-  msort(fruits)(Ordering.String)                  //> res1: List[String] = List(apple, banana, kiwi, orange, pineapple)
-  
-  // compareTo is a method on Java.string
-
-  val pair = ("answer", 42)                       //> pair  : (String, Int) = (answer,42)
-
-  // decompose pairs using pattern matching.  like labels or indexes?
-  val (label, value) = pair                       //> label  : String = answer
-                                                  //| value  : Int = 42
+  msort(fruits)                                   //> res1: List[String] = List(apple, banana, kiwi, orange, pineapple)
 
   // rewrite merge using a pattern matching over pairs
   // it doesn't really matter what is left-hand and what is right-hand
