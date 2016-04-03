@@ -1,6 +1,6 @@
 package week5
 
-object Mapping {
+object Mapping { 
 
   // using pattern matching
   def squareList(xs: List[Int]): List[Int] = xs match {
