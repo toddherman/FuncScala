@@ -23,5 +23,5 @@ object test {
   val x: List[String] = Nil // should be the empty list.
 
   // attempt at proving appropriate type inference
-  def f(xs: List[NonEmpty], x: Empty) = xs prepend x
+  // def f(xs: List[NonEmpty], x: Empty) = xs prepend x
 }

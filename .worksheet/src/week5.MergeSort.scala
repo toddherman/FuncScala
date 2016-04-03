@@ -1,7 +1,7 @@
 package week5
 
 import math.Ordering
-object MergeSort {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; def main(args: Array[String])=$execute{;$skip(1464); 
+object MergeSort {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._; def main(args: Array[String])=$execute{;$skip(1465); 
   
   // attempt to parameterize
   // make the function sort polymorphic
@@ -13,7 +13,7 @@ object MergeSort {;import org.scalaide.worksheet.runtime.library.WorksheetSuppor
   // that means you don't have to write them explicitly
   // Using the "Ordering" class instead,
   // Made it implicit.  So code is concise, but still fully parametric.
-  
+   
   def msort[T](xs: List[T])(implicit ord: Ordering[T]): List[T] = {
     // split the list
     val n = xs.length / 2
