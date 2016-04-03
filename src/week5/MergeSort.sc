@@ -13,7 +13,7 @@ object MergeSort {
   // that means you don't have to write them explicitly
   // Using the "Ordering" class instead,
   // Made it implicit.  So code is concise, but still fully parametric.
-   
+  
   def msort[T](xs: List[T])(implicit ord: Ordering[T]): List[T] = {
     // split the list
     val n = xs.length / 2
