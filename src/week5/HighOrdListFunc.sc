@@ -17,4 +17,6 @@ object HighOrdListFunc {
     
     // opposite
     nums dropWhile (x => x > 0)                   //> res4: List[Int] = List(-4, 5, 7, 1, 99)
+    
+    nums span (x => x > 0)                        //> res5: (List[Int], List[Int]) = (List(2),List(-4, 5, 7, 1, 99))
 }
