@@ -23,7 +23,7 @@ object Pack {
   // deduce run length encoding of a list
   // return a list of pairs of the element and an integer
   def encode[T](xs: List[T]): List[(T, Int)] =
-    // most of the work is done using pack (above)
+    // most of the work is done using pack (above) which yields a list of lists
     // With a packed list, apply a simple transformation to get length for each element
     // return a pair => first element in the sub list, length of that sub list
     pack(xs) map (ys => (ys.head, ys.length))     //> encode: [T](xs: List[T])List[(T, Int)]
