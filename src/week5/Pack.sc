@@ -4,6 +4,7 @@ object Pack {
 
   val data = List("a", "a", "a", "b", "c", "c", "a")
                                                   //> data  : List[String] = List(a, a, a, b, c, c, a)
+  val nums = List(2, -4, 5, 7, 1, 99)             //> nums  : List[Int] = List(2, -4, 5, 7, 1, 99)
 
   // pack consecutive duplicates into sublists
   def pack[T](xs: List[T]): List[List[T]] = xs match {
@@ -29,4 +30,10 @@ object Pack {
     pack(xs) map (ys => (ys.head, ys.length))     //> encode: [T](xs: List[T])List[(T, Int)]
 
   encode(data)                                    //> res1: List[(String, Int)] = List((a,3), (b,1), (c,2), (a,1))
+
+  def concat[T](xs: List[T], ys: List[T]): List[T] =
+    // when changed to foldLeft, error: "value :: is not a member of type parameter T"
+    (xs foldRight ys)(_ :: _)                     //> concat: [T](xs: List[T], ys: List[T])List[T]
+    
+    concat(data, nums)                            //> res2: List[Any] = List(a, a, a, b, c, c, a, 2, -4, 5, 7, 1, 99)
 }
