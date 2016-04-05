@@ -33,6 +33,7 @@ object Pack {
 
   def concat[T](xs: List[T], ys: List[T]): List[T] =
     // when changed to foldLeft, error: "value :: is not a member of type parameter T"
+   	// cons is not applicable to arbitrary elements, only to lists.
     (xs foldRight ys)(_ :: _)                     //> concat: [T](xs: List[T], ys: List[T])List[T]
     
     concat(data, nums)                            //> res2: List[Any] = List(a, a, a, b, c, c, a, 2, -4, 5, 7, 1, 99)
