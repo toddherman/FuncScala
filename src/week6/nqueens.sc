@@ -45,11 +45,17 @@ object nqueens {
 
   def show(queens: List[Int]) = {
     val lines =
+      // reverse the order because it the board is assembled bottom up.
       for (col <- queens.reverse)
+        // make a vector with n element with * and space
+        //updated:  A copy of the vector with one single replaced element.
+        // replace the queen column with an X
+        // make it into a string
         yield Vector.fill(queens.length)("* ").updated(col, "X ").mkString
-    "\n" + (lines mkString "\n")
+    "\n" + (lines mkString "\n") // this means the lines are separated by newline breaks
+
   }                                               //> show: (queens: List[Int])String
-  
+
   queens(4) map show                              //> res1: scala.collection.immutable.Set[String] = Set("
                                                   //| * * X * 
                                                   //| X * * * 
@@ -59,4 +65,47 @@ object nqueens {
                                                   //| * * * X 
                                                   //| X * * * 
                                                   //| * * X * ")
+  
+  // get rid of the set scaffolding
+  (queens(4) map show) mkString "\n"              //> res2: String = "
+                                                  //| * * X * 
+                                                  //| X * * * 
+                                                  //| * * * X 
+                                                  //| * X * * 
+                                                  //| 
+                                                  //| * X * * 
+                                                  //| * * * X 
+                                                  //| X * * * 
+                                                  //| * * X * "
+ // bigger board/more queens, show only 3 solutions
+ (queens(8) take 3 map show) mkString "\n"        //> res3: String = "
+                                                  //| * * * * * X * * 
+                                                  //| * * * X * * * * 
+                                                  //| * X * * * * * * 
+                                                  //| * * * * * * * X 
+                                                  //| * * * * X * * * 
+                                                  //| * * * * * * X * 
+                                                  //| X * * * * * * * 
+                                                  //| * * X * * * * * 
+                                                  //| 
+                                                  //| * * * * X * * * 
+                                                  //| * * * * * * X * 
+                                                  //| * X * * * * * * 
+                                                  //| * * * X * * * * 
+                                                  //| * * * * * * * X 
+                                                  //| X * * * * * * * 
+                                                  //| * * X * * * * * 
+                                                  //| * * * * * X * * 
+                                                  //| 
+                                                  //| * * * * * X * * 
+                                                  //| * * X * * * * * 
+                                                  //| * * * * * * X * 
+                                                  //| * * * X * * * * 
+                                                  //| X * * * * * * * 
+                                                  //| * * * * * * * X 
+                                                  //| * X * * * * * * 
+                                                  //| * * * * X * * * "
+
+
+
 }
