@@ -6,12 +6,14 @@ object polynomials {
   // map   exponent (Int), coefficient(Double)
   // instead of "val" terms field,
   class Poly(terms0: Map[Int, Double]) {
+    // accomodate multiple arguments using an auxillary constructor that takes a sequence * of bindings
+    def this(bindings: (Int, Double)*) = this(bindings.toMap)
     //	create field here with default value
     val terms = terms0 withDefaultValue 0.0
 
     // implement a Plus operation
     // similar coefficients must be added, break it out into a different function
-    																 // concatenation
+    // concatenation
     def +(other: Poly) = new Poly(terms ++ (other.terms map adjust))
     def adjust(term: (Int, Double)): (Int, Double) = {
       // pull out the key
@@ -28,9 +30,9 @@ object polynomials {
       (for ((exp, coeff) <- terms.toList.sorted.reverse) yield coeff + "x^" + exp) mkString " + "
   }
 
-  val p1 = new Poly(Map(1 -> 2.0, 3 -> 4.0, 5 -> 6.2))
-                                                  //> p1  : week6.polynomials.Poly = 6.2x^5 + 4.0x^3 + 2.0x^1
-  val p2 = new Poly(Map(0 -> 3.0, 3 -> 7.0))      //> p2  : week6.polynomials.Poly = 7.0x^3 + 3.0x^0
+  // can remove map because that is achieved in new bindings above
+  val p1 = new Poly(1 -> 2.0, 3 -> 4.0, 5 -> 6.2) //> p1  : week6.polynomials.Poly = 6.2x^5 + 4.0x^3 + 2.0x^1
+  val p2 = new Poly(0 -> 3.0, 3 -> 7.0)           //> p2  : week6.polynomials.Poly = 7.0x^3 + 3.0x^0
   p1 + p2                                         //> res0: week6.polynomials.Poly = 6.2x^5 + 11.0x^3 + 2.0x^1 + 3.0x^0
   p1.terms(3)                                     //> res1: Double = 4.0
 }
