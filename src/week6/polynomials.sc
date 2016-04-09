@@ -11,15 +11,17 @@ object polynomials {
     //	create field here with default value
     val terms = terms0 withDefaultValue 0.0
 
-    // implement a Plus operation
-    // similar coefficients must be added, break it out into a different function
-    // concatenation
-    def +(other: Poly) = new Poly(terms ++ (other.terms map adjust))
-    def adjust(term: (Int, Double)): (Int, Double) = {
+    // using foldLeft to compare efficiency
+    def +(other: Poly) = new Poly((other.terms foldLeft terms)(addTerm))
+    def addTerm(terms: Map[Int, Double], term: (Int, Double)): Map[Int, Double] = {
       // pull out the key
       val (exp, coeff) = term
-      // because of default, the following is greatly simplified because you don't need to match for Type
-      exp -> (coeff + terms(exp))
+      // foldleft more effiecient because
+      //each of these bindings will be immediately added terms map
+      // so we built up the result directly
+      // whereas, before we would create an another list of terms that contain the adjusted terms,
+      // and then we would concatenate this list to the original one
+      terms + (exp -> (coeff + terms(exp)))
     }
 
     // merge coefficients that have the same exponent
