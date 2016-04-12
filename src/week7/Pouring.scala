@@ -54,19 +54,19 @@ class Pouring(capacity: Vector[Int]) {
 
   val initialPath = new Path(Nil) // path that contains the empty history
 
-  // found a solution but not a very efficient one
-  // a better way to do it would be to exclude an state that we have visited before
-  def from(paths: Set[Path]): Stream[Set[Path]] =
+  // previously visited states excluded
+  def from(paths: Set[Path], explored: Set[State]): Stream[Set[Path]] =
     if (paths.isEmpty) Stream.empty
     else {
       val more = for {
         path <- paths
         next <- moves map path.extend
+        if !(explored contains next.endState)
       } yield next
-      paths #:: from(more)
+      paths #:: from(more, explored ++ (more map (_.endState)))
     }
 
-  val pathSets = from(Set(initialPath))
+  val pathSets = from(Set(initialPath), Set(initialState))
 
   // takes a target volume that we want to see in one of the glasses
   // returns a stream of paths with the target volume as the end state
