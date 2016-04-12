@@ -42,17 +42,14 @@ class Pouring(capacity: Vector[Int]) {
       (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to))
 
   // Paths:  sequences of moves
-  // graphically, this looks like a foldRight
-  // the new formulation is, without a doubt, much shorter and some would argue more elegant, 
-  // than the recursive pattern matching solution. 
-  // But for most people and particular beginners, it's also much harder to come up with and maybe to read.
-  class Path(history: List[Move]) {
-    def endState: State = (history foldRight initialState)(_ change _)
-    def extend(move: Move) = new Path(move :: history)
+  // as paths get longer, end state becomes more complicated to compute
+  // why recompute?  just store it.
+  class Path(history: List[Move], val endState: State) {
+    def extend(move: Move) = new Path(move :: history, move change endState)
     override def toString = (history.reverse mkString " ") + "--> " + endState
   }
 
-  val initialPath = new Path(Nil) // path that contains the empty history
+  val initialPath = new Path(Nil, initialState) // path that contains the empty history
 
   // previously visited states excluded
   def from(paths: Set[Path], explored: Set[State]): Stream[Set[Path]] =
