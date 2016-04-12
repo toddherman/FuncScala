@@ -44,12 +44,11 @@ class Pouring(capacity: Vector[Int] {
     
     // Paths:  sequences of moves
     // graphically, this looks like a foldRight
-    class Path(history: List[Move]{
-      def endState: State: trackState(history)
-      private def trackState(xs: List[Move]): State = xs match {
-        case Nil => initialState
-        case move :: xs1 => move change trackState(xs1)
-      }
+    // the new formulation is, without a doubt, much shorter and some would argue more elegant, 
+    // than the recursive pattern matching solution. 
+    // But for most people and particular beginners, it's also much harder to come up with and maybe to read.
+    class Path(history: List[Move]){
+      def endState: State = (history foldRight initialState)(_ change _)
       
     }
 }
